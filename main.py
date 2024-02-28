@@ -110,12 +110,57 @@ def format_game_data(game_data):
     # Print the table
     print(table)
 
+def get_team_tricode(team):
+    nba_teams = {
+        "hawks": "ATL",
+        "celtics": "BOS",
+        "nets": "BKN",
+        "hornets": "CHA",
+        "bulls": "CHI",
+        "cavaliers": "CLE",
+        "mavericks": "DAL",
+        "nuggets": "DEN",
+        "pistons": "DET",
+        "warriors": "GSW",
+        "rockets": "HOU",
+        "pacers": "IND",
+        "clippers": "LAC",
+        "lakers": "LAL",
+        "grizzlies": "MEM",
+        "heat": "MIA",
+        "bucks": "MIL",
+        "timberwolves": "MIN",
+        "pelicans": "NOP",
+        "knicks": "NYK",
+        "thunder": "OKC",
+        "magic": "ORL",
+        "sixers": "PHI",
+        "suns": "PHX",
+        "blazers": "POR",
+        "kings": "SAC",
+        "spurs": "SAS",
+        "raptors": "TOR",
+        "jazz": "UTA",
+        "wizards": "WAS"
+    }
+    tricode = nba_teams.get(team)
+    if tricode:
+        return tricode
+    else:
+        raise KeyError("That's not a valid NBA team")
+
 def main():
     games = scoreboard.ScoreBoard().get_dict()
 
     # print(json.dumps(games, indent=2))
 
-    # rockets current game
+    team = input("Choose an NBA Team: ")
+    if not team:
+        team = "rockets"
+        
+    teamTricode = get_team_tricode(team)
+
+    # current game
     rox_board = [game for game in games["scoreboard"]["games"] if game["homeTeam"]["teamTricode"] == "HOU" or game["awayTeam"]["teamTricode"] == "HOU"]
     
     if len(rox_board) > 0:
@@ -128,7 +173,7 @@ def main():
 
         format_box_score(players["boxScoreTraditional"])
     else:
-        print("No Rockets game today")
+        print(f"No {team} game today")
 
 if __name__ == "__main__":
     main()
