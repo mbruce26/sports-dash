@@ -153,12 +153,15 @@ def main():
     games = scoreboard.ScoreBoard().get_dict()
 
     # print(json.dumps(games, indent=2))
-
-    team = input("Choose an NBA Team: ")
-    if not team:
-        team = "rockets"
-        
-    teamTricode = get_team_tricode(team)
+    while True:
+        try:
+            team = input("Choose an NBA Team: ")
+            if not team:
+                team = "rockets"
+                
+            teamTricode = get_team_tricode(team)
+        except KeyError:
+            continue
 
     # current game
     rox_board = [game for game in games["scoreboard"]["games"] if game["homeTeam"]["teamTricode"] == "HOU" or game["awayTeam"]["teamTricode"] == "HOU"]
